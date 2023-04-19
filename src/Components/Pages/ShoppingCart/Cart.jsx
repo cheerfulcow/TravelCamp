@@ -14,6 +14,7 @@ const Cart = (props) => {
     >
     <div>
       <h3>Моя корзина</h3>
+      <h4>Раздел в разработке</h4>
     </div>
     </motion.div>
   )
