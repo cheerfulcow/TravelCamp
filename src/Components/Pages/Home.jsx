@@ -6,12 +6,18 @@ import About from './About';
 import Directions from './Directions';
 import Guides from './Guides';
 import Booking from './Booking';
-
-
+import {motion} from 'framer-motion'
 
 
 const Home = (props) => {
   return (
+//Настройки для появления и мсчезания при переходе с/на страницу 
+    <motion.div 
+    initial={{opacity: 0 }}
+    animate={{opacity: 1 }} 
+    exit={{opacity: 0 }}   
+    transition={{duration: 0.7}}
+    >   
     <div>     
      <SliderMain item={props.item}/>     
      <About/>          
@@ -21,6 +27,7 @@ const Home = (props) => {
      <div className="gap300"></div>
      <Footer/>     
     </div>
+    </motion.div>
   )
 }
 

@@ -5,8 +5,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 
 
+
 const NavBar = () => {
-  return (    
+  return (     
     <div>      
       <Navbar bg="dark" variant="dark">
         <Container >  
@@ -25,6 +26,7 @@ const NavBar = () => {
         </Container>
       </Navbar>
     </div>
+   
   )
 }
 

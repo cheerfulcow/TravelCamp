@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
+import {motion} from 'framer-motion'
 
 const SliderMain = (props) => {
   return (
@@ -15,12 +16,15 @@ const SliderMain = (props) => {
         /> 
          <Carousel.Caption>
           <h3 className='carouselH3'>Видовые пешеходные маршруты по горной местности</h3>
+          <div> 
           <Link exact to={'/booking'}>
-            <Button variant="dark" className='mx-6'>Забронировать тур</Button>
+            <Button variant="dark" className='mx-6'>Забронировать тур</Button>                  
           </Link>
-          <Link exact to={'/directions'}>
-            <Button variant="dark">Наши туры</Button>
-          </Link>                 
+          <Link exact to={'/directions'}>          
+            <Button variant="dark">Наши туры</Button>                    
+          </Link> 
+          </div>
+                          
         </Carousel.Caption>           
       </Carousel.Item>
       <Carousel.Item interval={3000}>

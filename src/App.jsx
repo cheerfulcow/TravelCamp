@@ -12,6 +12,9 @@ import Guides from './Components/Pages/Guides';
 import Booking from './Components/Pages/Booking';
 import Cart from './Components/Pages/ShoppingCart/Cart';
 import Favorites from './Components/Pages/Favorites/Favorites';
+import { AnimatePresence } from "framer-motion";
+import { useLocation } from 'react-router-dom';
+
 
 //Экспортируем контекст
 export const AppContext = React.createContext({})
@@ -58,10 +61,13 @@ const totalPrice=cartItems.reduce((element = cartItems.length, obj)=>
   element+obj.price, 0 
   )
 
+// хук для анимированного перехода между страницами
+const location = useLocation();
 
 
 // --- return starts here --- //
   return (   
+    
 //Передаём данные в контекст для доступа к ним из любого компоненты
     <AppContext.Provider
     value={
@@ -76,12 +82,12 @@ const totalPrice=cartItems.reduce((element = cartItems.length, obj)=>
         isFavorites
       }
     }
-    >
-    
-    <div>
-      <Router>
-        <NavBar/>
-        <Routes>
+    >   
+
+    <div> 
+        <NavBar/>        
+          <AnimatePresence mode='wait'>
+          <Routes location={location} key={location.pathname}>        
 {/* В path указывается URL путь, в element - то, что будет отрисовано по этому пути.
 при необходимости скармливаем компонентам пропсы - данные от БД */}
           <Route path='/' element = {<Home 
@@ -111,11 +117,11 @@ const totalPrice=cartItems.reduce((element = cartItems.length, obj)=>
             deleteItems={deleteItems}
           />}>            
         </Route>
-        </Routes>
-      </Router>  
+        </Routes> 
+        </AnimatePresence>      
     </div>
-
     </AppContext.Provider>
+    
   );
 } 
 

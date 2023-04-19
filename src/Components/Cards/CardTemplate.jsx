@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import {motion} from 'framer-motion'
 
 const CardTemplate = (props) => {  
 
@@ -16,6 +17,11 @@ const showDetailedInfo =()=>{
 const [favorites, setFavorites] = useState(false);
 const onClickFavorites =()=>{
   setFavorites(!favorites);
+
+  const pageMotionPreSet = {
+    initial:{opacity:0},
+    animate:{opacity:1}
+  }
 
 }
 
@@ -46,45 +52,122 @@ const onClickFavorites =()=>{
     <div className="cardTemplate">
     <div>
       <Card>
-      <Card.Img variant="top" src={props.img} />
+      <Card.Img variant="top"       
+      src={props.img} />
       <Card.Body> 
         <Card.Title>{props.title}</Card.Title>
         <Card.Text>{props.descriptionShort}</Card.Text>        
         <div className="cardButtons">
 {/* При нажатии кнопки будет раскрываться и сворачиваться доп инфа о маршруте */}
         {(detailed == true) ?
-  //Если кнопка нажата - раскрываем
-          <div>
-          <p id="CardTemplateDetailInfo">{props.descriptionFull}</p>
-          <h5>Параметры маршрута</h5>
-          <p id="CardTemplateDetailInfo">Тип маршрута: {props.tourType}</p>
-          <p id="CardTemplateDetailInfo">Продолжительность: {props.duration}</p>
-          <p id="CardTemplateDetailInfo">Дистанция: {props.distance}</p>        
-          <p id="CardTemplateDetailInfo">Набор высоты: {props.elevation}</p>
-          <p id="CardTemplateDetailInfo">Максимальное количество участников в группе: {props.maxPersonInGroup}</p>
-          <p id="CardTemplateDetailInfo">Стоимость (малая группа {props.smallGroupQuantity}): {props.priceSmallGroup}</p>
-          <p id="CardTemplateDetailInfo">Стоимость (большая группа): {props.priceLargeGroup}</p>
+  //Если кнопка нажата - раскрываем подробную инфу о туре (+ анимация текста)
+        <div>
+{/* Плавное появление текста. Для каждого следующего параграфа увеличивается задержка */}
+        <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 0.2,duration: 1}}>
+          {props.descriptionFull}
+          </motion.p>
+
+          <motion.h5 
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 0.6,duration: 1}}>
+           Параметры маршрута
+          </motion.h5> 
+
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 0.8,duration: 1}}>
+         Тип маршрута: {props.tourType}
+          </motion.p>
+
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 1.0,duration: 1}}>
+          Длительность: {props.duration}
+          </motion.p>
+
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 1.2,duration: 1}}>
+          Дистанция: {props.distance}
+          </motion.p>
+
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 1.4, duration: 1}}>
+          Набор высоты: {props.elevation}
+          </motion.p>
+
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 1.6,duration: 1}}>
+          Максимальное количество участников в группе: {props.maxPersonInGroup}
+          </motion.p>
+
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 1.8,duration: 1}}>
+          Стоимость (малая группа {props.smallGroupQuantity}): {props.priceSmallGroup}
+          </motion.p>
+
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 2.0,duration: 1}}>
+          Стоимость (большая группа): {props.priceLargeGroup}
+          </motion.p>
+
           <br/>
-          <p>Быть может, тут ещё будет галерея. Но это не точно</p>
+          <motion.p id='CardTemplateDetailInfo'
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          transition={{delay: 2.2,duration: 1}}>
+          Быть может, тут ещё будет галерея. Но это не точно
+          </motion.p> 
+
           <br/>
-          <Button id="cardButtonDetailedInfo"variant="dark" className="detailedInfoButton" onClick={showDetailedInfo}>Свернуть описание</Button>
-          </div>        
+          <motion.div
+          whileHover={{scale:1.05}}>
+          <Button id="cardButtonDetailedInfo" variant="dark" className="detailedInfoButton" onClick={showDetailedInfo}>Свернуть описание</Button>
+          </motion.div>
+          <br/>
+
+          </div> 
             :
    //Иначе не показываем / сворачиваем
-          <Button variant="dark" className="detailedInfoButton" onClick={showDetailedInfo}>Подробнее о маршруте</Button>        
-        }        
-        <br/>
+          <motion.div
+          whileHover={{scale:1.05}}>
+          <Button variant="dark" className="detailedInfoButton" onClick={showDetailedInfo}>Подробнее о маршруте</Button>
+          </motion.div>        
+        } 
         
-        {(favorites == false) ?                
+        {(favorites == false) ? 
+           <motion.div
+           whileHover={{scale:1.05}}>            
           <Button variant="dark" className="detailedInfoButton" onClick={onClickFavorites}>Добавить в избранное</Button>
+          </motion.div>
           :
-          <Button variant="dark" className="detailedInfoButton" onClick={onClickFavorites}>Удалить из избранного</Button> 
-        }
-        <br/>      
-      
+          <motion.div
+          whileHover={{scale:1.05}}>
+          <Button variant="dark" className="detailedInfoButton" onClick={onClickFavorites}>Удалить из избранного</Button>
+          </motion.div>          
+        }             
+        <motion.div
+          whileHover={{scale:1.05}}>
         <Link exact to={'/booking'}>          
         <Button variant="dark" className="detailedInfoButton">Записаться</Button>
         </Link>
+        </motion.div>
+        
         </div>        
       </Card.Body>
     </Card> 
