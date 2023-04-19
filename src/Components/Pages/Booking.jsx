@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import TourTable from '../TourTable'
 import BookingForm from '../BookingForm'
 import {motion} from 'framer-motion'
+import { AppContext } from '../../App'
 
 const Booking = (props) => {
+
+  const context=useContext(AppContext)
+
   return (
 //Настройки для появления и мсчезания при переходе с/на страницу
     <motion.div 
@@ -13,7 +17,7 @@ const Booking = (props) => {
     transition={{duration: 0.7}}
     >
     <div className="booking">
-      <h2>БРОНИРОВАНИЕ ТУРОВ</h2>
+      <h2>БРОНИРОВАНИЕ ТУРОВ</h2>      
       <BookingForm item={props.item}/>
       <p className ="descriptionP">Раздел на доработке</p>
       <TourTable/>

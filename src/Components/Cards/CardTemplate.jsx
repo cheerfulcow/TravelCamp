@@ -1,51 +1,55 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import {motion} from 'framer-motion'
+import { AppContext } from '../../App';
+
 
 const CardTemplate = (props) => {  
 
-const [detailed, setDetailed ] = useState(false);
-//Функция для раскрытия/скрытия подробной информации о карточке
-const showDetailedInfo =()=>{
-  setDetailed(!detailed);
-}
+  const context = React.useContext(AppContext)
+  const [added, setAdded] = useState(context.isAdded); // для корзины
+  const [favorite, setFavorite] = useState(false);
 
-//Функция для добавления в избранное (пока не работает)
-const [favorites, setFavorites] = useState(false);
-const onClickFavorites =()=>{
-  setFavorites(!favorites);
-
-  const pageMotionPreSet = {
-    initial:{opacity:0},
-    animate:{opacity:1}
+  const [detailed, setDetailed ] = useState(false);
+  //Функция для раскрытия/скрытия подробной информации о карточке
+  const showDetailedInfo =()=>{
+    setDetailed(!detailed);
   }
 
-}
+  const onClickBooking = () => {  
+    let bookingProps = props;   
+    context.setBookingTourTitle(bookingProps);  
+  }
 
-// //Добавление товара в избранное (перенести в CardHiking, CardCycling?)
-// const onAddFavorites=async(obj)=>{
-//   try{
-//     const findFavorites = props.favorites.find(objFavorites=>objFavorites.myId===obj.myId)
-//     if(findFavorites){ //если уже есть в избранных
-//       //удалить из БД избранных товаров
-//       axios.delete(`https://643d1b4a6afd66da6aecbd82.mockapi.io/Favorites/${findFavorites.id}`)
-//       //удалить из пропсов
-//       props.setFavorites((over)=>over.filter(o=>o.myId !== obj.myId))
-//     }
-//     else{
-//       //добавляем карточку в БД избранное
-//       const{data}=await axios.post('https://643d1b4a6afd66da6aecbd82.mockapi.io/Favorites', obj)
-//       //Добавляем данные карточки в пропсы
-//       props.setFavorites([...props.favorites,data])
-//     }
-//   }
-//   catch {
-//     alert("Что-то пошло не так. Наши специалисты уже не разбираются с проблемой")
-//   }
-// }
+  const onClickFavorites =()=>{    
+    setFavorite(!favorite);    
+    let id = props.id;
+    let myId = props.myId;
+    let title = props.title;
+    let descriptionShort = props.descriptionShort;
+    let descriptionFull=props.descriptionFull;
+    let tourType=props.tourType;
+    let duration=props.duration;
+    let distance=props.distance;
+    let elevation=props.elevation;
+    let maxPersonInGroup=props.maxPersonInGroup;
+    let smallGroupQuantity=props.smallGroupQuantity;
+    let priceSmallGroup=props.priceSmallGroup;
+    let priceLargeGroup=props.priceLargeGroup;
+    let img=props.img;    
+    props.onAddFavorites({
+      id, myId, title, descriptionShort, descriptionFull, tourType, duration, distance,
+      elevation, maxPersonInGroup,smallGroupQuantity, priceSmallGroup, priceLargeGroup, img});      
+    }
+
+  // const pageMotionPreSet = {
+  //   initial:{opacity:0},
+  //   animate:{opacity:1}
+  // }
+
+
 
 // --- return --- //
   return (
@@ -137,34 +141,36 @@ const onClickFavorites =()=>{
           <br/>
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button id="cardButtonDetailedInfo" variant="dark" className="detailedInfoButton" onClick={showDetailedInfo}>Свернуть описание</Button>
+          <Button id="cardButtonDetailedInfo" variant="dark" className="detailedInfoButton" 
+          onClick={showDetailedInfo}>Свернуть описание</Button>
           </motion.div>
           <br/>
-
           </div> 
             :
    //Иначе не показываем / сворачиваем
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button variant="dark" className="detailedInfoButton" onClick={showDetailedInfo}>Подробнее о маршруте</Button>
+          <Button variant="dark" className="detailedInfoButton" 
+          onClick={showDetailedInfo}>Подробнее о маршруте</Button>
           </motion.div>        
         } 
-        
-        {(favorites == false) ? 
+        {context.isFavorites(props.myId) == true ?         
            <motion.div
            whileHover={{scale:1.05}}>            
-          <Button variant="dark" className="detailedInfoButton" onClick={onClickFavorites}>Добавить в избранное</Button>
+          <Button variant="dark" className="detailedInfoButton" 
+          onClick={onClickFavorites}>Удалить из избранного</Button>
           </motion.div>
           :
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button variant="dark" className="detailedInfoButton" onClick={onClickFavorites}>Удалить из избранного</Button>
+          <Button variant="dark" className="detailedInfoButton" 
+          onClick={onClickFavorites}>Добавить в избранное</Button>
           </motion.div>          
         }             
         <motion.div
           whileHover={{scale:1.05}}>
         <Link exact to={'/booking'}>          
-        <Button variant="dark" className="detailedInfoButton">Записаться</Button>
+        <Button variant="dark" className="detailedInfoButton" onClick={onClickBooking}>Записаться</Button>
         </Link>
         </motion.div>
         

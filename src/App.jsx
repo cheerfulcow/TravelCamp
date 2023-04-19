@@ -16,7 +16,7 @@ import { AnimatePresence } from "framer-motion";
 import { useLocation } from 'react-router-dom';
 
 
-//Экспортируем контекст
+//Экспортируем контекст из реакта: {} означает, что там будет массив данных
 export const AppContext = React.createContext({})
 
 
@@ -24,7 +24,8 @@ function App() {
   
   const[tours, setTours] = useState([]);
   const[favorites, setFavorites] = useState([]);
-  const[cartItems, setCartItems] = useState([]);  
+  const[cartItems, setCartItems] = useState([]); 
+  const[bookingTour, setBookingTourTitle] = useState([]);
 //получаем данные от БД, async + await - для асинхронной работы 
 //(отрисовка и выполнение кода без ожидания получения данных от сервера)
   useEffect (()=> {
@@ -33,20 +34,26 @@ function App() {
       const favoritesData = await axios.get('https://643d1b4a6afd66da6aecbd82.mockapi.io/Favorites');
       const cartData = await axios.get('https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart'); 
 
-      setTours(toursData.data); //обращаемся к пришедшему объекту и забираем только данные (data)
+//.data - обращаемся к пришедшему объекту и забираем только данные (помимо них, ещё приходит много другой сервисной информации)
+      setTours(toursData.data); 
       setFavorites(favoritesData.data);
       setCartItems(cartData.data);
+      
     }
     axiosData();
 },[]) // ,[] - указываем для того, чтобы сервак не отправлял постоянно запросы (каждые +/- 1-100 мс)
 
-//удаление товаров
+//удаление товара по пришедшему id
 const deleteItems=(id)=>{
   axios.delete(`https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart/${id}`)  
 //Так же удаляем объект из стэйтов(фильтруем и оставляем только те, у которых ID отличается от удаляемго)
+// в objDelete - переменная, в которой хранятся все объекты хука, их мы и фильтруем
   setCartItems((objDelete)=> objDelete.filter(item=> item.id !==id)) 
 }
 
+//Тут мы передаём myId, потому что при добавлении товаров вкорзину (или избранное), 
+//ID баз данных с корзиной и самими турами может стать различным, а myId - всегда уникальный
+//Эта функция отслеживает уже добавленный товар и не даёт его добавить повторно (возвращает true/false)
 const isAdded=(myId)=>{
   return cartItems.some((objIsAdded)=> objIsAdded.myId === myId)
 }
@@ -55,7 +62,7 @@ const isFavorites=(myId)=>{
   return favorites.some((objIsFavorites)=> objIsFavorites.myId === myId)
 }
 
-//Для подсчета суммы в корзине
+//Для подсчета суммы в корзине (функционал пока не работает)
 //.reduce = означает, что действие для каждого элемента
 const totalPrice=cartItems.reduce((element = cartItems.length, obj)=>
   element+obj.price, 0 
@@ -78,8 +85,11 @@ const location = useLocation();
         setFavorites,
         cartItems,
         setCartItems,
+        bookingTour,
+        setBookingTourTitle,
         isAdded,
-        isFavorites
+        isFavorites,
+        deleteItems                
       }
     }
     >   
@@ -120,8 +130,7 @@ const location = useLocation();
         </Routes> 
         </AnimatePresence>      
     </div>
-    </AppContext.Provider>
-    
+    </AppContext.Provider>    
   );
 } 
 

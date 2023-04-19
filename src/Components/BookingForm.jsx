@@ -2,14 +2,21 @@ import React from 'react'
 import { Button } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { AppContext } from '../App';
+
 
 const BookingForm = (props) => {
+
+  const context = React.useContext(AppContext)
+
+
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
   console.log(watch("example")); // watch input value by passing the name of it
+  console.log("12345"+context.bookingTour)
   
    return (
-    <div>
+    <div>      
       <form id="bookingForm" onSubmit={handleSubmit(onSubmit)}>
         <div>
         <input {...register('lastName', {
@@ -74,11 +81,16 @@ const BookingForm = (props) => {
           <select
           className='form-control' 
           {...register("tourTitle", {required: true })}
-          
           >
 {/* Прописываем пустое value='' для option по-умолчанию, для того чтобы 
-срабатывала проверка на невыбранное значение.*/}
-          <option value="" disabled selected hidden>Выберете тур из списка (подтягиваем данные из БД)</option>
+срабатывала проверка на невыбранное значение.
+Также, если был осуществлён переход по кнопке "записаться на тур", то автоматически 
+подставляем название и тип тура*/}
+          <option value="" disabled selected hidden>
+          {(context.bookingTour.title == null) ? 
+          "Выберите тур(автозаполн. от `btn Записаться`)"
+          : context.bookingTour.title +' ('+ context.bookingTour.tourType +')'
+          } </option>
 {/* Проходимся циклом по базе данных и забираем оттуда названия туров, тип маршрута 
 и для каждого тура создаём свой option */}
           {props.item.map(obj => {
