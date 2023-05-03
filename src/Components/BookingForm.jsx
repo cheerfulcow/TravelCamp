@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { AppContext } from '../App';
+import axios from 'axios';
 
 
 const BookingForm = (props) => {
@@ -10,10 +11,14 @@ const BookingForm = (props) => {
   const context = React.useContext(AppContext)
 
 
+
+
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-  console.log(watch("example")); // watch input value by passing the name of it
-  console.log("12345"+context.bookingTour)
+  const onSubmit = data => {
+    axios.post('https://6420194b82bea25f6dfa019b.mockapi.io/Form', data)
+    alert("Данные успешно отправлены")
+  }
+
   
    return (
     <div>      
@@ -50,7 +55,7 @@ const BookingForm = (props) => {
         {errors?.firstName?.type==='maxLength' && (<p>Поле не может содержать более 30 символов</p>)}
         {errors?.firstName?.type==='pattern' && (<p>Введите фамилию используя кириллицу</p>)}
 
-        <div>        
+        {/* <div>        
           <input {...register('email', {
             required:true,
             minLength:6,
@@ -62,7 +67,7 @@ const BookingForm = (props) => {
         </div>
         {errors?.email?.type==='required' && (<p>Поле обязательно для заполнения</p>)}
         {errors?.email?.type==='minLength' && (<p>Введите корректный е-mail</p>)}
-        {errors?.email?.type==='maxLength' && (<p>Поле не может содержать более 100 символов</p>)}  
+        {errors?.email?.type==='maxLength' && (<p>Поле не может содержать более 100 символов</p>)}   */}
 
         <div>
         <input {...register('phoneNumber', {
@@ -88,7 +93,7 @@ const BookingForm = (props) => {
 подставляем название и тип тура*/}
           <option value="" disabled selected hidden>
           {(context.bookingTour.title == null) ? 
-          "Выберите тур(автозаполн. от `btn Записаться`)"
+          "Выберите тур"
           : context.bookingTour.title +' ('+ context.bookingTour.tourType +')'
           } </option>
 {/* Проходимся циклом по базе данных и забираем оттуда названия туров, тип маршрута 
@@ -100,7 +105,7 @@ const BookingForm = (props) => {
         </div>
         {errors?.tourTitle?.type==='required' && (<p>Выберите тур</p>)}
 
-        <div>        
+        {/* <div>        
           <input {...register('personQuantity', {
             required:true,
             min:1,            
@@ -112,38 +117,12 @@ const BookingForm = (props) => {
         </div>
         {errors?.personQuantity?.type==='required' && (<p>Укажите количество человек в группе</p>)}
         {errors?.personQuantity?.type==='min' && (<p>Количество человек должно быть не менее 1</p>)}
-        {errors?.personQuantity?.type==='max' && (<p>Количество человек должно быть не более 8</p>)}
+        {errors?.personQuantity?.type==='max' && (<p>Количество человек должно быть не более 8</p>)} */}
 
-        <div>          
-          <select id="selectDisabled" disabled {...register("tourDate", {
-            required:true            
-          })}
-          className='form-control'
-          >
-          <option value="" disabled selected hidden>Выберете дату тура(функционал пока не доступен)</option>
-{/* Раздел с выбором даты пока заблокирован, функционал отсутствует.
-Проходимся циклом по базе данных и забираем оттуда названия туров, тип маршрута 
-и для каждого тура создаём свой option */}
-          {/* {props.item.map(obj => {
-          return(
-          <option>{obj.title} ({obj.tourType})</option>)})} 
-          */}
-          </select>
-        </div> 
-        {/* {errors?.tourDate?.type==='required' && (<p>Выберите дату</p>)} */}
-        
-        <input className="btn btn-success" type="submit" value={"Добавить в корзину"}/>        
-        
-        <Link exact to={'/cart'}>        
-          <input className="btn btn-success" type="button" value={"Перейти к корзине"} />           
-        </Link>   
-
+                
+        <input className="btn btn-success" id="feedbackButton" type="submit" value="заказать звонок"/> 
         
       </form>
-
-      <div>
-        <h3>Ваши туры</h3>
-      </div>
 
     </div>
   )

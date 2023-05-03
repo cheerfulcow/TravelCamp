@@ -17,10 +17,9 @@ const Booking = (props) => {
     transition={{duration: 0.7}}
     >
     <div className="booking">
-      <h2>БРОНИРОВАНИЕ ТУРОВ</h2>      
+      <h2>Получить консультацию</h2>  
+      <p id="feedbackP">Заполните форму и мы Вам перезвоним </p>    
       <BookingForm item={props.item}/>
-      <p className ="descriptionP">Раздел на доработке</p>
-      <TourTable/>
       <div className="gap100"></div>
     </div>
     </motion.div>

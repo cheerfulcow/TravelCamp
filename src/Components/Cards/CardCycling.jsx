@@ -29,6 +29,29 @@ const onAddFavorites=async(obj)=>{
   }
 }
 
+//Добавление/удаление товара в корзину
+const onAddToCart=async(obj)=>{
+
+  try{       
+    const findCartItem = context.cartItems.find(objCart=>objCart.myId===obj.myId)    
+    if(findCartItem){ //если уже есть в корзине
+      //удалить из БД избранных товаров
+      axios.delete(`https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart/${findCartItem.id}`)
+      //удалить из пропсов
+      context.setCartItems((cart)=>cart.filter(o=>o.myId !== obj.myId))      
+    }
+    else{      
+      //добавляем карточку в API корзины
+      const {data} = await axios.post('https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart', obj)      
+      //Добавляем данные карточки в пропсы
+      context.setCartItems([...context.cartItems, data])      
+    }
+  }
+  catch {
+    alert("Что-то пошло не так. Наши специалисты уже не разбираются с проблемой")
+  }
+}
+
   return (      
     <div>  
       {         
@@ -51,8 +74,8 @@ const onAddFavorites=async(obj)=>{
             priceSmallGroup={obj.priceSmallGroup}
             priceLargeGroup={obj.priceLargeGroup}
             img={obj.img}
-            onAddFavorites={(favoritesObj)=>{onAddFavorites(favoritesObj)}}            
-            //добавить функцию добавления в корзину
+            onAddFavorites={(favoritesObj)=>{onAddFavorites(favoritesObj)}} 
+            onAddToCart={(cartObj)=>{onAddToCart(cartObj)}}
             />
           )}
         }) 

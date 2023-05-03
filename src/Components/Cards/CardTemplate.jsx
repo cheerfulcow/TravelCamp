@@ -9,6 +9,9 @@ import { AppContext } from '../../App';
 const CardTemplate = (props) => {  
 
   const context = React.useContext(AppContext)
+
+  let isAddedToCart = context.cartItems.find(objCart=>objCart.myId===props.myId)
+
   const [added, setAdded] = useState(context.isAdded); // для корзины
   const [favorite, setFavorite] = useState(false);
 
@@ -48,6 +51,27 @@ const CardTemplate = (props) => {
   //   initial:{opacity:0},
   //   animate:{opacity:1}
   // }
+
+    // Функция добавления в корзину
+    const onClickAddToCart = () => { 
+      let id = props.id;
+      let myId = props.myId;
+      let title = props.title;
+      let descriptionShort = props.descriptionShort;
+      let descriptionFull=props.descriptionFull;
+      let tourType=props.tourType;
+      let duration=props.duration;
+      let distance=props.distance;
+      let elevation=props.elevation;
+      let maxPersonInGroup=props.maxPersonInGroup;
+      let smallGroupQuantity=props.smallGroupQuantity;
+      let priceSmallGroup=props.priceSmallGroup;
+      let priceLargeGroup=props.priceLargeGroup;
+      let img=props.img;  
+      props.onAddToCart({
+        id, myId, title, descriptionShort, descriptionFull, tourType, duration, distance,
+        elevation, maxPersonInGroup,smallGroupQuantity, priceSmallGroup, priceLargeGroup, img})     
+    }
 
 
 
@@ -120,15 +144,15 @@ const CardTemplate = (props) => {
           initial={{opacity:0}}
           animate={{opacity:1}}
           transition={{delay: 1.8,duration: 1}}>
-          Стоимость (малая группа {props.smallGroupQuantity}): {props.priceSmallGroup}
+          Стоимость : {props.priceSmallGroup} руб.
           </motion.p>
 
-          <motion.p id='CardTemplateDetailInfo'
+          {/* <motion.p id='CardTemplateDetailInfo'
           initial={{opacity:0}}
           animate={{opacity:1}}
           transition={{delay: 2.0,duration: 1}}>
           Стоимость (большая группа): {props.priceLargeGroup}
-          </motion.p>
+          </motion.p> */}
 
           <br/>
           <motion.p id='CardTemplateDetailInfo'
@@ -141,7 +165,7 @@ const CardTemplate = (props) => {
           <br/>
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button id="cardButtonDetailedInfo" variant="dark" className="detailedInfoButton" 
+          <Button  variant="dark" id="cardButtonDetailedInfo"
           onClick={showDetailedInfo}>Свернуть описание</Button>
           </motion.div>
           <br/>
@@ -150,29 +174,38 @@ const CardTemplate = (props) => {
    //Иначе не показываем / сворачиваем
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button variant="dark" className="detailedInfoButton" 
+          <Button variant="dark" id="detailedInfoButton" 
           onClick={showDetailedInfo}>Подробнее о маршруте</Button>
           </motion.div>        
         } 
+        <motion.div
+        whileHover={{scale:1.05}}>
+        <Link exact to={'/booking'}>          
+        <Button variant="dark" id="detailedInfoButton" onClick={onClickBooking}>Получить консультацию</Button>
+        </Link>
+        </motion.div>
         {context.isFavorites(props.myId) == true ?         
            <motion.div
            whileHover={{scale:1.05}}>            
-          <Button variant="dark" className="detailedInfoButton" 
+          <Button variant="dark" id="detailedInfoButton" 
           onClick={onClickFavorites}>Удалить из избранного</Button>
           </motion.div>
           :
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button variant="dark" className="detailedInfoButton" 
+          <Button variant="dark" id="detailedInfoButton" 
           onClick={onClickFavorites}>Добавить в избранное</Button>
           </motion.div>          
-        }             
+        }   
         <motion.div
           whileHover={{scale:1.05}}>
-        <Link exact to={'/booking'}>          
-        <Button variant="dark" className="detailedInfoButton" onClick={onClickBooking}>Записаться</Button>
-        </Link>
-        </motion.div>
+          <Button variant="dark" id="detailedInfoButton" 
+          onClick={onClickAddToCart}> { isAddedToCart ?            
+            'Удалить из корзины' 
+            :
+            'Добавить в корзину'
+          } </Button>
+          </motion.div>
         
         </div>        
       </Card.Body>

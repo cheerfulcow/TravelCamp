@@ -8,44 +8,36 @@ import { AppContext } from '../../../App';
 const FavoritesItem = (props) => {
 
   const context=React.useContext(AppContext)
-
-  const [added, setAdded] = useState(false);
+  
   const [detailed, setDetailed ] = useState(false);
 
-  // const[bookingTour, setBookingTourTitle] = useState('');
+  let isAddedToCart = context.cartItems.find(objCart=>objCart.myId===props.myId)
 
 //Функция для раскрытия/скрытия подробной информации о карточке
 const showDetailedInfo =()=>{
   setDetailed(!detailed);
 } 
 
-//При нажатии на кнопку "Записаться", в форму подставятся тайтл и тип маршрута
-const onClickBooking = () => {  
-  let bookingProps = props;   
-  context.setBookingTourTitle(bookingProps);  
-}
-
-//Функция добавления в корзину. Disable.Думаю, переедет в Booking
-  // const onClickAddToCart = () => {
-  //   setAdded(!added);
-  //   let id = props.id;
-  //   let myId = props.myId;
-  //   let title = props.title;
-  //   let descriptionShort = props.descriptionShort;
-  //   let descriptionFull=props.descriptionFull;
-  //   let tourType=props.tourType;
-  //   let duration=props.duration;
-  //   let distance=props.distance;
-  //   let elevation=props.elevation;
-  //   let maxPersonInGroup=props.maxPersonInGroup;
-  //   let smallGroupQuantity=props.smallGroupQuantity;
-  //   let priceSmallGroup=props.priceSmallGroup;
-  //   let priceLargeGroup=props.priceLargeGroup;
-  //   let img=props.img;
-  //   props.onAddToCart({
-  //     id, myId, title, descriptionShort, descriptionFull, tourType, duration, distance,
-  //     elevation, maxPersonInGroup,smallGroupQuantity, priceSmallGroup, priceLargeGroup, img})      
-  // }
+// Функция добавления в корзину
+  const onClickAddToCart = () => { 
+    let id = props.id;
+    let myId = props.myId;
+    let title = props.title;
+    let descriptionShort = props.descriptionShort;
+    let descriptionFull=props.descriptionFull;
+    let tourType=props.tourType;
+    let duration=props.duration;
+    let distance=props.distance;
+    let elevation=props.elevation;
+    let maxPersonInGroup=props.maxPersonInGroup;
+    let smallGroupQuantity=props.smallGroupQuantity;
+    let priceSmallGroup=props.priceSmallGroup;
+    let priceLargeGroup=props.priceLargeGroup;
+    let img=props.img;  
+    props.onAddToCart({
+      id, myId, title, descriptionShort, descriptionFull, tourType, duration, distance,
+      elevation, maxPersonInGroup,smallGroupQuantity, priceSmallGroup, priceLargeGroup, img})     
+  }
   
   //При нажатии на кнопку удалить, вызывает функцию onDeleteFavorites из Favorites 
   //и передает в неё id удаляемого товара
@@ -120,7 +112,7 @@ const onClickBooking = () => {
           initial={{opacity:0}}
           animate={{opacity:1}}
           transition={{delay: 1.8,duration: 1}}>
-          Стоимость (малая группа {props.smallGroupQuantity}): {props.priceSmallGroup}
+          Стоимость (малая группа, до {props.smallGroupQuantity} человек): {props.priceSmallGroup}
           </motion.p>
 
           <motion.p id='CardTemplateDetailInfo'
@@ -162,24 +154,24 @@ const onClickBooking = () => {
           onClick={onClickDelete}>Удалить из избранного</Button>
           </motion.div>
 
-          <motion.div
-          whileHover={{scale:1.05}}>
-          <Link exact to={'/booking'}>          
-          <Button variant="dark" className="detailedInfoButton"
-          onClick={onClickBooking}>
-          Записаться</Button>
-          </Link>
-          </motion.div>
-          
           {/* <motion.div
           whileHover={{scale:1.05}}>
+          <Link exact to={'/cart'}>          
+          <Button variant="dark" className="detailedInfoButton"
+          onClick={onClickBooking}>
+          Добавить в корзину</Button>
+          </Link>
+          </motion.div> */}
+          
+          <motion.div
+          whileHover={{scale:1.05}}>
           <Button variant="dark" className="detailedInfoButton" 
-          onClick={onClickAddToCart}> { added ?
-            'Уже у вас в корзине'
+          onClick={onClickAddToCart}> { isAddedToCart ?            
+            'Удалить из корзины' 
             :
             'Добавить в корзину'
           } </Button>
-          </motion.div> */}
+          </motion.div>
 
         </div>        
       </Card.Body>

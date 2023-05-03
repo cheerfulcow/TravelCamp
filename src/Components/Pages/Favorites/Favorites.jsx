@@ -9,13 +9,30 @@ import FavoritesItem from './FavoritesItem'
 const Favorites = (props) => {
 
 //Объявляем context (тут хранятся данные, которые раздавали в App.jsx в AppContext.Provider)
-//Если будут ошибки, попробовать использовать useContex
-const context=React.createContext(AppContext)
+//Если будут ошибки, попробовать использовать useContext
+const context=React.useContext(AppContext)
 
-//Сработает при добавлении товара в корзину(из раздела с фаворитами)
-const onAddToCart = (obj) =>{
-  axios.post('https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart', obj)
-  context.setCartItems([...context.cartItems, obj]);
+//Добавление/удаление товара в корзину
+const onAddToCart=async(obj)=>{
+
+  try{       
+    const findCartItem = context.cartItems.find(objCart=>objCart.myId===obj.myId)    
+    if(findCartItem){ //если уже есть в корзине
+      //удалить из БД избранных товаров
+      axios.delete(`https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart/${findCartItem.id}`)
+      //удалить из пропсов
+      context.setCartItems((cart)=>cart.filter(o=>o.myId !== obj.myId))      
+    }
+    else{      
+      //добавляем карточку в API корзины
+      const {data} = await axios.post('https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart', obj)      
+      //Добавляем данные карточки в пропсы
+      context.setCartItems([...context.cartItems, data])      
+    }
+  }
+  catch {
+    alert("Что-то пошло не так. Наши специалисты уже не разбираются с проблемой")
+  }
 }
 
 //При удалении товара из избранных удаляет его из API раздела избранных
@@ -53,8 +70,8 @@ const onDeleteFavorites=(id)=> {
             smallGroupQuantity={obj.smallGroupQuantity}
             priceSmallGroup={obj.priceSmallGroup}
             priceLargeGroup={obj.priceLargeGroup}
-            img={obj.img}
-            onDeleteFavorites={(id)=>{onDeleteFavorites(id)}}
+            img={obj.img}            
+            onDeleteFavorites={(myId)=>{onDeleteFavorites(myId)}}
             onAddToCart={(cartObj)=>{onAddToCart(cartObj)}}
             />
             </div>

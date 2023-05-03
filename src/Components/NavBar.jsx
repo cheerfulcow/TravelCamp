@@ -18,7 +18,7 @@ const NavBar = () => {
             <Nav.Link ><Link to={'/about'}>О нас</Link></Nav.Link>            
             <Nav.Link ><Link to={'/directions'}> Наши туры</Link> </Nav.Link>
             <Nav.Link ><Link to={'/guides'}>Наши гиды</Link></Nav.Link>
-            <Nav.Link ><Link to={'/booking'}>Записаться в тур</Link></Nav.Link>
+            <Nav.Link ><Link to={'/booking'}>Заказать звонок</Link></Nav.Link>
             <Nav.Link ><Link to={'/favorites'}>Список желаний</Link></Nav.Link> 
             <Nav.Link ><Link to={'/cart'}>Корзина</Link></Nav.Link>           
           </Nav> 

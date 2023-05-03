@@ -18,7 +18,7 @@ const SliderMain = (props) => {
           <h3 className='carouselH3'>Видовые пешеходные маршруты по горной местности</h3>
           <div> 
           <Link exact to={'/booking'}>
-            <Button variant="dark" className='mx-6'>Забронировать тур</Button>                  
+            <Button variant="dark" className='mx-6'>Связаться с нами</Button>                  
           </Link>
           <Link exact to={'/directions'}>          
             <Button variant="dark">Наши туры</Button>                    
@@ -36,7 +36,7 @@ const SliderMain = (props) => {
         <Carousel.Caption>
           <h3 className='carouselH3'>Пешеходные маршруты в предгорье</h3>
           <Link exact to={'/booking'}>
-            <Button variant="dark" className='mx-6'>Забронировать тур</Button>
+            <Button variant="dark" className='mx-6'>Связаться с нами</Button>
           </Link>
           <Link exact to={'/directions'}>
             <Button variant="dark">Наши туры</Button>
@@ -52,7 +52,7 @@ const SliderMain = (props) => {
         <Carousel.Caption>
           <h3 className='carouselH3'>Многодневные походы в горы</h3>
           <Link exact to={'/booking'}>
-            <Button variant="dark" className='mx-6'>Забронировать тур</Button>
+            <Button variant="dark" className='mx-6'>Связаться с нами</Button>
           </Link>
           <Link exact to={'/directions'}>
             <Button variant="dark">Наши туры</Button>
@@ -68,7 +68,7 @@ const SliderMain = (props) => {
         <Carousel.Caption>
           <h3 className='carouselH3'>Экологические тропы</h3>
           <Link exact to={'/booking'}>
-            <Button variant="dark" className='mx-6'>Забронировать тур</Button>
+            <Button variant="dark" className='mx-6'>Связаться с нами</Button>
           </Link>
           <Link exact to={'/directions'}>
             <Button variant="dark">Наши туры</Button>

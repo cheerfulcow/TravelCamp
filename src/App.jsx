@@ -44,18 +44,11 @@ function App() {
 },[]) // ,[] - указываем для того, чтобы сервак не отправлял постоянно запросы (каждые +/- 1-100 мс)
 
 //удаление товара по пришедшему id
-const deleteItems=(id)=>{
-  axios.delete(`https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart/${id}`)  
+const deleteItems=(myId)=>{
+  axios.delete(`https://643d1b4a6afd66da6aecbd82.mockapi.io/Cart/${myId}`)  
 //Так же удаляем объект из стэйтов(фильтруем и оставляем только те, у которых ID отличается от удаляемго)
 // в objDelete - переменная, в которой хранятся все объекты хука, их мы и фильтруем
-  setCartItems((objDelete)=> objDelete.filter(item=> item.id !==id)) 
-}
-
-//Тут мы передаём myId, потому что при добавлении товаров вкорзину (или избранное), 
-//ID баз данных с корзиной и самими турами может стать различным, а myId - всегда уникальный
-//Эта функция отслеживает уже добавленный товар и не даёт его добавить повторно (возвращает true/false)
-const isAdded=(myId)=>{
-  return cartItems.some((objIsAdded)=> objIsAdded.myId === myId)
+  setCartItems((objDelete)=> objDelete.filter(item=> item.myId !==myId)) 
 }
 
 const isFavorites=(myId)=>{
@@ -65,7 +58,7 @@ const isFavorites=(myId)=>{
 //Для подсчета суммы в корзине (функционал пока не работает)
 //.reduce = означает, что действие для каждого элемента
 const totalPrice=cartItems.reduce((element = cartItems.length, obj)=>
-  element+obj.price, 0 
+  element+Number(obj.priceSmallGroup), 0 
   )
 
 // хук для анимированного перехода между страницами
@@ -87,9 +80,10 @@ const location = useLocation();
         setCartItems,
         bookingTour,
         setBookingTourTitle,
-        isAdded,
+        // isAdded,
         isFavorites,
-        deleteItems                
+        deleteItems,  
+        totalPrice              
       }
     }
     >   
