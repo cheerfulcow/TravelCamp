@@ -12,9 +12,9 @@ const NavBar = () => {
       <Navbar bg="dark" variant="dark">
         <Container >  
 {/* Link to = указываем URL, на который будет переход при нажатии на ссылочный элемент */}
-          <Navbar.Brand><Link to={'/'}>Travel Camp</Link></Navbar.Brand> 
+          <Navbar.Brand><Link to={'/'} id="travelCamp"><img src='../siteLogo.png' id="siteLogo"></img>Travel Camp</Link></Navbar.Brand>           
           <div className="navbar-collapse collapse justify-content-around">        
-          <Nav>
+          <Nav id="travelCampLinks">
             <Nav.Link ><Link to={'/about'}>О нас</Link></Nav.Link>            
             <Nav.Link ><Link to={'/directions'}> Наши туры</Link> </Nav.Link>
             <Nav.Link ><Link to={'/guides'}>Наши гиды</Link></Nav.Link>

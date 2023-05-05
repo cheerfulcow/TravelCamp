@@ -55,13 +55,14 @@ const onAddToCart=async(obj)=>{
 }
 
   return (      
-    <div>  
+    <div className='row'>  
       {         
         props.item.map(obj=> {
 //Проходимся циклом (map) по всем объектам БД. Если в БД в графе tourType 
 //будет указано, что маршрут "Пеший", то создаём карточку этого тура
           if (obj.tourType === "Пеший"){
-          return (            
+          return (
+            <div>            
             <CardTemplate
 //Передаем пропсы - все поля объекта из БД
             key={obj.id}
@@ -82,6 +83,7 @@ const onAddToCart=async(obj)=>{
             onAddFavorites={(favoritesObj)=>{onAddFavorites(favoritesObj)}} 
             onAddToCart={(cartObj)=>{onAddToCart(cartObj)}} 
             />
+            </div>
           )}
         }) 
       }

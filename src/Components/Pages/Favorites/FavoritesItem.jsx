@@ -50,8 +50,11 @@ const showDetailedInfo =()=>{
       <Card>
       <Card.Img variant="top"       
       src={props.img} />
-      <Card.Body> 
-        <Card.Title>{props.title}</Card.Title>
+      <Card.Body id="cardText"> 
+        <Card.Title>
+          {props.title}
+          <p>Стоимость тура: {props.priceSmallGroup} руб.</p>
+          </Card.Title>
         <Card.Text>{props.descriptionShort}</Card.Text>        
         <div className="cardButtons">
 {/* При нажатии кнопки будет раскрываться и сворачиваться доп инфа о маршруте */}
@@ -112,28 +115,12 @@ const showDetailedInfo =()=>{
           initial={{opacity:0}}
           animate={{opacity:1}}
           transition={{delay: 1.8,duration: 1}}>
-          Стоимость (малая группа, до {props.smallGroupQuantity} человек): {props.priceSmallGroup}
+          Стоимость : {props.priceSmallGroup}
           </motion.p>
 
-          <motion.p id='CardTemplateDetailInfo'
-          initial={{opacity:0}}
-          animate={{opacity:1}}
-          transition={{delay: 2.0,duration: 1}}>
-          Стоимость (большая группа): {props.priceLargeGroup}
-          </motion.p>
-
-          <br/>
-          <motion.p id='CardTemplateDetailInfo'
-          initial={{opacity:0}}
-          animate={{opacity:1}}
-          transition={{delay: 2.2,duration: 1}}>
-          Быть может, тут ещё будет галерея. Но это не точно
-          </motion.p> 
-
-          <br/>
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button id="cardButtonDetailedInfo" variant="dark" className="detailedInfoButton" 
+          <Button id="cardButtonDetailedInfo" variant="dark"  
           onClick={showDetailedInfo}>Свернуть описание</Button>
           </motion.div>
           <br/>
@@ -143,14 +130,14 @@ const showDetailedInfo =()=>{
    //Иначе не показываем / сворачиваем
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button variant="dark" className="detailedInfoButton" 
+          <Button variant="dark" id="detailedInfoButton" 
           onClick={showDetailedInfo}>Подробнее о маршруте</Button>
           </motion.div>        
         }         
          
            <motion.div
            whileHover={{scale:1.05}}>            
-          <Button variant="dark" className="detailedInfoButton" 
+          <Button variant="dark" id="detailedInfoButton" 
           onClick={onClickDelete}>Удалить из избранного</Button>
           </motion.div>
 
@@ -165,7 +152,7 @@ const showDetailedInfo =()=>{
           
           <motion.div
           whileHover={{scale:1.05}}>
-          <Button variant="dark" className="detailedInfoButton" 
+          <Button variant="dark" id="detailedInfoButton" 
           onClick={onClickAddToCart}> { isAddedToCart ?            
             'Удалить из корзины' 
             :

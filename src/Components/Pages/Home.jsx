@@ -20,9 +20,11 @@ const Home = (props) => {
     >   
     <div>     
      <SliderMain item={props.item}/>     
-     <About/>          
+     <About/> 
+     <hr/>         
      <Directions item={props.item}/>     
-     <Guides/> 
+     {/* <Guides/>  */}
+     <hr></hr>
      <Booking item={props.item}/>           
      <div className="gap300"></div>
      <Footer/>     

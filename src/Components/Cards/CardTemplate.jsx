@@ -83,8 +83,13 @@ const CardTemplate = (props) => {
       <Card.Img variant="top"       
       src={props.img} />
       <Card.Body> 
-        <Card.Title>{props.title}</Card.Title>
-        <Card.Text>{props.descriptionShort}</Card.Text>        
+        <Card.Title id="cardText">
+          {props.title}
+          <p>Стоимость тура: {props.priceSmallGroup} руб.</p>
+          </Card.Title>
+        <Card.Text id="cardText">
+          {props.descriptionShort}          
+          </Card.Text>        
         <div className="cardButtons">
 {/* При нажатии кнопки будет раскрываться и сворачиваться доп инфа о маршруте */}
         {(detailed == true) ?
@@ -140,27 +145,12 @@ const CardTemplate = (props) => {
           Максимальное количество участников в группе: {props.maxPersonInGroup}
           </motion.p>
 
-          <motion.p id='CardTemplateDetailInfo'
-          initial={{opacity:0}}
-          animate={{opacity:1}}
-          transition={{delay: 1.8,duration: 1}}>
-          Стоимость : {props.priceSmallGroup} руб.
-          </motion.p>
-
           {/* <motion.p id='CardTemplateDetailInfo'
           initial={{opacity:0}}
           animate={{opacity:1}}
           transition={{delay: 2.0,duration: 1}}>
           Стоимость (большая группа): {props.priceLargeGroup}
           </motion.p> */}
-
-          <br/>
-          <motion.p id='CardTemplateDetailInfo'
-          initial={{opacity:0}}
-          animate={{opacity:1}}
-          transition={{delay: 2.2,duration: 1}}>
-          Быть может, тут ещё будет галерея. Но это не точно
-          </motion.p> 
 
           <br/>
           <motion.div

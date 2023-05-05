@@ -78,7 +78,7 @@ body {
 /* Настройка размеров изображения в основной карусели */
 .w-100 {
   width: 100% !important;
-  height: 90vh;
+  height: 87vh;
 }
 /*---------------------------------*/
 
@@ -118,8 +118,8 @@ padding: 10px;
 
 footer p{
   color: #6d6b6b;
-  padding: 0px 0 0 20px;
-  margin: 2px;
+  padding: 0;
+  margin: 0px;
 }
 
 .gap300 {
@@ -218,6 +218,7 @@ input:invalid{
 
 #CardTemplateDetailInfo {
   text-align: justify;
+  font-size: 14pt;
   margin: 4px;
 }
 
@@ -286,6 +287,60 @@ hr {
 
 #feedbackButton{
   width: 100%;
+}
+
+#travelCamp{
+  font-size: 24pt;
+  font-family: 'Pacifico', cursive;
+}
+
+#travelCampLinks{
+  font-size: 14pt;
+  font-family: 'Pacifico', cursive;
+}
+
+#cardText {
+  font-size: 14pt;
+  text-align: center;
+}
+
+#siteLogo {
+  width: 7vw;
+  margin: 0 5vw 0 -10vw;
+  border-radius: 50%;
+  padding: 0 0 0 30px;
+}
+
+#footerLogo img{
+  width: 8vw;  
+  border-radius: 50%;  
+  padding: 0 0 0 2vw;
+}
+
+#footer {  
+  margin: 1vw 0;
+  font-size: calc(5pt + 0.6vw);
+  text-align: center;
+  font-family: 'Pacifico', cursive;
+}
+
+#footer p{  
+  margin: 0 0 10px 0;
+}
+
+#footerTravelCamp{
+  font-size: calc(5pt + 1.2vw);
+  font-family: 'Pacifico', cursive;
+  padding: 0;
+  margin: 10px 0 10px 2vw;
+}
+
+#underTravel {
+  font-size: calc(5pt + 0.8vw);  
+}
+
+#directions {
+  background-color: #050505;
 }
 
 
